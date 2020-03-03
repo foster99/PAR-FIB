@@ -1,0 +1,22 @@
+Init:
+
+Aprox:
+Tseq = 811
+Tpar = 1528
+
+Sin Extrae T1 es casi 2.2 s
+Sin Extrae T8 es casi 1.4 s
+
+Improving FI:
+
+	Aprox:
+Tseq = 210
+Tpar = 2137
+
+Sin Extrae T1 2.198 s
+Sin Extrae T8 es casi 0.679 s
+
+Final:
+	Aprox:
+Tseq = 290
+Tpar = 2189
