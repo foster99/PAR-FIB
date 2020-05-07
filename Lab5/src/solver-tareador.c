@@ -26,19 +26,19 @@ double relax_jacobi (double *u, double *utmp, unsigned sizex, unsigned sizey)
         int i_end = upperb(blockid, howmany, sizex);
         for (int i=max(1, i_start); i<= min(sizex-2, i_end); i++) {
             for (int j=1; j<= sizey-2; j++) {
-	            // One task for each innermost loop iteration
+	        // One task for each innermost loop iteration
                 tareador_start_task("relax_jacobi");
-                utmp[i*sizey+j]= 0.25 * ( 	u[ i*sizey     + (j-1) ]+  // left
-                            				u[ i*sizey     + (j+1) ]+  // right
-                            				u[ (i-1)*sizey + j     ]+  // top
-                            				u[ (i+1)*sizey + j     ]); // bottom
-                            				
+                utmp[i*sizey+j]= 0.25 * ( u[ i*sizey     + (j-1) ]+  // left
+                            		  u[ i*sizey     + (j+1) ]+  // right
+                            		  u[ (i-1)*sizey + j     ]+  // top
+                            		  u[ (i+1)*sizey + j     ]); // bottom
+                		
                 diff = utmp[i*sizey+j] - u[i*sizey + j];
                 
                 // Protect sum variable
                 tareador_disable_object(&sum);
                 sum += diff * diff;
-				tareador_enable_object(&sum);
+		tareador_enable_object(&sum);
                 
                 tareador_end_task("relax_jacobi");
             }
@@ -62,17 +62,18 @@ double relax_gauss (double *u, unsigned sizex, unsigned sizey)
         for (int i=max(1, i_start); i<= min(sizex-2, i_end); i++) {
             for (int j=1; j<= sizey-2; j++) {
             	// One task for each innermost loop iteration
-	            tareador_start_task("relax_gauss");
+	        tareador_start_task("relax_gauss");
                 unew= 0.25 * ( u[ i*sizey + (j-1) ]+  // left
-                			   u[ i*sizey + (j+1) ]+  // right
-                			   u[ (i-1)*sizey + j ]+  // top
+                   	       u[ i*sizey + (j+1) ]+  // right
+                	       u[ (i-1)*sizey + j ]+  // top
                                u[ (i+1)*sizey + j ]); // bottom
-                diff = unew - u[i*sizey+ j];
+                
+		diff = unew - u[i*sizey+ j];
                 
                 // Protect sum variable
                 tareador_disable_object(&sum);
                 sum += diff * diff;
-				tareador_enable_object(&sum);
+		tareador_enable_object(&sum);
 				
                 u[i*sizey+j]=unew;
                 tareador_end_task("relax_gauss");
